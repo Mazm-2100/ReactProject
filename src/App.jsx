@@ -9,7 +9,7 @@ export default function App() {
     <BrowserRouter>
       <Toaster />
       <Routes>
-        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/" element={<LoginPage/>} />
         <Route path="/phones" element={<Phones />} />
         <Route path="/ewallet" element={<EWallet />} />
         <Route path="*" element={<h1>404 Page</h1>} />

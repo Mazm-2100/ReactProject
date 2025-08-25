@@ -86,7 +86,7 @@ export default function Phones() {
         >
           Go to EWallet system <FaArrowRight />
         </button>
-        <button className="btn btn-primary" onClick={()=>{goToLogin("/login")}}>Login</button>
+        <button className="btn btn-primary" onClick={()=>{goToLogin("/")}}>Login</button>
       </div>
       {/* Add Phone Modal */}
       {addModalIndex && (

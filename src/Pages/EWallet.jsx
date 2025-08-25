@@ -74,7 +74,7 @@ export default function EWallet() {
         <button
           className="btn btn-primary"
           onClick={() => {
-            goToLogin("/login");
+            goToLogin("/");
           }}
         >
           Login
