@@ -2,9 +2,13 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function EWallet() {
   const myInput = useRef();
+  const goToPhones = useNavigate();
+  const goToLogin = useNavigate();
   const [balance, setBalance] = useState(+localStorage.getItem("balance") || 0);
   const [transactions, setTransactions] = useState(
     JSON.parse(localStorage.getItem("transactions")) || []
@@ -58,6 +62,24 @@ export default function EWallet() {
   };
   return (
     <div className="p-3">
+      <div className="col-12 mb-4 d-flex justify-content-between align-items-center">
+        <button
+          className="btn btn-warning"
+          onClick={() => {
+            goToPhones("/phones");
+          }}
+        >
+          Go to Phones system <FaArrowRight />
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            goToLogin("/login");
+          }}
+        >
+          Login
+        </button>
+      </div>
       <h1>
         Your balance is {showBalance ? balance + " EGP " : "****** "}{" "}
         {showBalance ? (

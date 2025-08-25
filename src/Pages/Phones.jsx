@@ -4,8 +4,12 @@ import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function Phones() {
+  const goToEWallet = useNavigate();
+  const goToLogin = useNavigate();
   const [phones, setPhones] = useState(
     JSON.parse(localStorage.getItem("phones")) || []
   );
@@ -73,6 +77,17 @@ export default function Phones() {
 
   return (
     <div className="App col-12 p-3">
+      <div className="col-12 mb-4 d-flex justify-content-between align-items-center">
+        <button
+          className="btn btn-warning"
+          onClick={() => {
+            goToEWallet("/EWallet");
+          }}
+        >
+          Go to EWallet system <FaArrowRight />
+        </button>
+        <button className="btn btn-primary" onClick={()=>{goToLogin("/login")}}>Login</button>
+      </div>
       {/* Add Phone Modal */}
       {addModalIndex && (
         <div
@@ -80,7 +95,7 @@ export default function Phones() {
           onClick={() => setAddModalIndex(false)}
         >
           <form
-            className="bg-light border rounded shadow p-4 col-6 animate__animated animate__fadeInDown"
+            className="bg-light border rounded shadow p-4 col-11 col-md-8 col-lg-6 animate__animated animate__fadeInDown"
             onSubmit={handleSubmit}
             onClick={(event) => event.stopPropagation()}
           >
@@ -120,7 +135,7 @@ export default function Phones() {
           onClick={() => setEditModalIndex(false)}
         >
           <form
-            className="bg-light border rounded shadow p-4 col-6 animate__animated animate__fadeInDown"
+            className="bg-light border rounded shadow p-4 col-11 col-md-8 col-lg-6 animate__animated animate__fadeInDown"
             onSubmit={handleEdit}
             onClick={(event) => event.stopPropagation()}
           >
