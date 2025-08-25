@@ -6,13 +6,11 @@ import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
 
 export default function Phones() {
-  const [phones, setPhones] = useState([
-    { name: "iphone x", price: 400, qty: 33 },
-    { name: "iphone 11", price: 450, qty: 8 },
-    { name: "iphone 13", price: 500, qty: 23 },
-  ]);
-  const [addModelIndex, setAddModelIndex] = useState(false);
-  const [editModelIndex, setEditModelIndex] = useState(false);
+  const [phones, setPhones] = useState(
+    JSON.parse(localStorage.getItem("phones")) || []
+  );
+  const [addModalIndex, setAddModalIndex] = useState(false);
+  const [editModalIndex, setEditModalIndex] = useState(false);
   const [editPhoneIndex, setEditPhoneIndex] = useState(-1);
   const [newPhoneName, setNewPhoneName] = useState("");
   const [newPhonePrice, setNewPhonePrice] = useState(0);
@@ -30,12 +28,13 @@ export default function Phones() {
       let copy = [...phones];
       copy.push(newPhoneObj);
       setPhones(copy);
+      localStorage.setItem("phones", JSON.stringify(copy));
       Swal.fire({
         icon: "success",
         text: "Phone Added",
         timer: 1500,
       });
-      setAddModelIndex(false);
+      setAddModalIndex(false);
     } else {
       Swal.fire({
         icon: "error",
@@ -49,6 +48,7 @@ export default function Phones() {
     let copy = [...phones];
     copy.splice(index, 1);
     setPhones(copy);
+    localStorage.setItem("phones", JSON.stringify(copy));
   };
 
   const handleEdit = (event) => {
@@ -61,21 +61,23 @@ export default function Phones() {
     let copy = [...phones];
     copy[editPhoneIndex] = updatedPhone;
     setPhones(copy);
+    localStorage.setItem("phones", JSON.stringify(copy));
+
     Swal.fire({
       icon: "success",
       text: "Phone Updated",
       timer: 1500,
     });
-    setEditModelIndex(false);
+    setEditModalIndex(false);
   };
 
   return (
     <div className="App col-12 p-3">
       {/* Add Phone Modal */}
-      {addModelIndex ? (
+      {addModalIndex && (
         <div
-          className="ourModel d-flex justify-content-center align-items-center"
-          onClick={() => setAddModelIndex(false)}
+          className="ourModal d-flex justify-content-center align-items-center"
+          onClick={() => setAddModalIndex(false)}
         >
           <form
             className="bg-light border rounded shadow p-4 col-6 animate__animated animate__fadeInDown"
@@ -86,7 +88,7 @@ export default function Phones() {
               <h2>Add New Phone</h2>
               <IoCloseSharp
                 className="fs-2"
-                onClick={() => setAddModelIndex(false)}
+                onClick={() => setAddModalIndex(false)}
               />
             </div>
             <input
@@ -110,13 +112,12 @@ export default function Phones() {
             <button className="btn btn-primary">+ Add New</button>
           </form>
         </div>
-      ) : null}
-
+      )}
       {/* Edit Phone Modal */}
-      {editModelIndex ? (
+      {editModalIndex && (
         <div
-          className="ourModel d-flex justify-content-center align-items-center"
-          onClick={() => setEditModelIndex(false)}
+          className="ourModal d-flex justify-content-center align-items-center"
+          onClick={() => setEditModalIndex(false)}
         >
           <form
             className="bg-light border rounded shadow p-4 col-6 animate__animated animate__fadeInDown"
@@ -127,7 +128,7 @@ export default function Phones() {
               <h2>Edit Phone Data</h2>
               <IoCloseSharp
                 className="fs-2"
-                onClick={() => setEditModelIndex(false)}
+                onClick={() => setEditModalIndex(false)}
               />
             </div>
             <input
@@ -154,19 +155,19 @@ export default function Phones() {
             <button className="btn btn-primary">Save Changes</button>
           </form>
         </div>
-      ) : null}
-
+      )}
       {/* Main UI */}
+      <h1>Phones Shop</h1>
       <button
-        className="btn btn-primary m-3"
+        className="btn btn-primary"
         onClick={() => {
-          showTable && setAddModelIndex(true);
+          showTable && setAddModalIndex(true);
         }}
       >
         + Add New Phone
       </button>
       <button
-        className="btn btn-dark"
+        className="btn btn-dark m-3"
         onClick={() => {
           setShowTable(!showTable);
         }}
@@ -174,7 +175,7 @@ export default function Phones() {
         Show Table
       </button>
       {showTable && (
-        <table className="table table-bordered table-dark col-12">
+        <table className="table table-bordered table-dark col-12 animate__animated animate__fadeInUp">
           <thead>
             <tr>
               <th>-</th>
@@ -203,7 +204,7 @@ export default function Phones() {
                       setNewPhoneName(el.name);
                       setNewPhonePrice(el.price);
                       setNewPhoneQty(el.qty);
-                      setEditModelIndex(true);
+                      setEditModalIndex(true);
                     }}
                   />
                 </td>

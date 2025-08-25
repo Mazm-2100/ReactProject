@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa6";
 
 export default function EWallet() {
   const myInput = useRef();
@@ -8,6 +10,7 @@ export default function EWallet() {
     JSON.parse(localStorage.getItem("transactions")) || []
   );
   const [showTrans, setShowTrans] = useState(false);
+  const [showBalance, setShowBalance] = useState(false);
   const diposit = () => {
     let value = +myInput.current.value;
     if (value > 0) {
@@ -27,7 +30,7 @@ export default function EWallet() {
       localStorage.setItem("transactions", JSON.stringify(copy));
     } else {
       myInput.current.value = "";
-      toast.error("please enter mony");
+      toast.error("please enter money");
     }
   };
   const withdorw = () => {
@@ -39,6 +42,7 @@ export default function EWallet() {
         type: "withdrow",
         aBalance: balance - value,
       };
+
       let copy = [...transactions];
       copy.push(newObj);
       setTransactions(copy);
@@ -49,14 +53,31 @@ export default function EWallet() {
       localStorage.setItem("transactions", JSON.stringify(copy));
     } else {
       myInput.current.value = "";
-      toast.error("No mony to withdorw");
+      toast.error("No money to withdorw");
     }
   };
   return (
     <div className="p-3">
-      <h1>Your balance is {balance} EGP</h1>
+      <h1>
+        Your balance is {showBalance ? balance + " EGP " : "****** "}{" "}
+        {showBalance ? (
+          <FaEyeSlash
+            onClick={() => {
+              setShowBalance(false);
+            }}
+          />
+        ) : (
+          <FaEye
+            onClick={() => {
+              setShowBalance(true);
+            }}
+          />
+        )}
+      </h1>
+
       <input
         ref={myInput}
+        disabled={!showBalance}
         min={0}
         style={{ height: "7vh" }}
         type="number"
@@ -70,16 +91,18 @@ export default function EWallet() {
         <button className="btn btn-primary" onClick={diposit}>
           Diposit
         </button>
-        <button
-          className="btn btn-dark"
-          onClick={() => {
-            setShowTrans(!showTrans);
-          }}
-        >
-          show transactions
-        </button>
+        {showBalance && (
+          <button
+            className="btn btn-dark"
+            onClick={() => {
+              setShowTrans(!showTrans);
+            }}
+          >
+            show transactions
+          </button>
+        )}
       </div>
-      {showTrans && (
+      {showTrans && showBalance && (
         <table className="table table-dark table-bordered my-3 animate__animated animate__fadeInUp ">
           <thead>
             <tr>
