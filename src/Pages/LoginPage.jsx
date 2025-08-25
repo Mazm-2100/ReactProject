@@ -13,7 +13,7 @@ export default function LoginPage() {
       toast.success("Login successed");
       navigate("/EWallet");
     } else {
-      toast.error("wrong password");
+      toast.error("wrong username or password");
     }
   };
   return (
