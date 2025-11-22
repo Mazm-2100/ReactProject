@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   let login = (event) => {
     event.preventDefault();
-    if (myPass.current.value == "1234"&& myName.current.value == "Mohamed") {
+    if (myPass.current.value == "1234" && myName.current.value == "Mohamed") {
       toast.success("Login successed");
       navigate("/EWallet");
     } else {
@@ -18,7 +18,7 @@ export default function LoginPage() {
   };
   return (
     <div
-      className="bg-light col-12 d-flex justify-content-center align-items-center"
+      className="bg-light col-12 d-flex flex-column justify-content-center align-items-center gap-3"
       style={{ height: "100vh" }}
     >
       <form
@@ -40,6 +40,10 @@ export default function LoginPage() {
         />
         <button className="btn btn-dark">login</button>
       </form>
+      <div className="col-12 text-secondary d-flex justify-content-center gap-5 align-items-center">
+        <p>Name : Mohamed</p>
+        <p>Password : 1234</p>
+      </div>
     </div>
   );
 }

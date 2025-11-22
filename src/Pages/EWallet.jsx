@@ -80,9 +80,11 @@ export default function EWallet() {
           Login
         </button>
       </div>
-      <h1>
-        Your balance is {showBalance ? balance + " EGP " : "****** "}{" "}
-        {showBalance ? (
+
+      <h1 className="col-10 col-md-7 col-lg-8 col-xl-5 d-flex justify-content-between align-items-center gap-1">
+        Your balance is 
+        <span className="col d-flex justify-content-center align-items-center"> {showBalance ? balance + " EGP " : " ******** "} </span>
+         {showBalance ? (
           <FaEyeSlash
             onClick={() => {
               setShowBalance(false);
